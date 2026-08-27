@@ -1,0 +1,96 @@
+---
+name: maid-orchestration
+description: >-
+  Use Maid orchestration for structured multi-agent coordination on Windows:
+  persistent threaded messages between agent terminals, blocking ask/reply
+  flows, task DAGs with dependencies, dispatching work to supervised worker
+  tabs, waiting for worker_done or escalation, decision gates, and coordinator
+  loops. Use for "orchestration", "maid orchestration", "coordinate agents",
+  "dispatch a task", "spawn a worker agent", "wait for worker_done", "task
+  DAG", "decision gate", and "ask another agent". Use maid-computer-use
+  instead for desktop UI interaction, and use plain terminal commands for
+  ordinary shell work that needs no coordination state.
+version: 1.0.0
+---
+
+# Inter-Agent Orchestration (Windows)
+
+This file is a discovery stub, not the usage guide. The full, version-matched orchestration
+reference is served by the `maid-cli` binary itself — kept out of this file on purpose so it
+can never drift from the binary that will actually run your commands.
+
+Engage Maid's orchestration surface whenever **coordination state matters** — when someone
+has to know which task is running where, who reported what, and whether a message was
+acknowledged. It covers persistent threaded messages between agent terminals, blocking
+ask/reply flows, task DAGs with dependencies, dispatching work to supervised worker tabs,
+waiting for `worker_done` or escalation, decision gates, and coordinator loops.
+
+Use `maid-computer-use` instead for desktop UI interaction, and plain terminal commands for
+ordinary shell work that needs no coordination state.
+
+This provider is **Windows-only**.
+
+## This surface talks to the running app
+
+Unlike `maid-computer-use`, these commands do not act alone — Runs, tasks, dispatches, and
+the message inbox live inside the Maid app, and the CLI reaches it over a named pipe. **The
+app must be running.** If it is not, every command answers with a JSON error saying so; the
+CLI will not launch the app for you, because that would tie the app's lifetime to a single
+command.
+
+## Resolve the CLI for this session
+
+Choose the executable once and reuse it for every later command:
+
+- If the `MAID_CLI_COMMAND` environment variable is set, use its value.
+- Otherwise, use the `maid-cli.exe` that is already on `PATH`.
+- Otherwise, use the full path of the installed binary.
+
+**It is the CLI binary, not the app binary.** Maid ships two executables that are built
+together: the app opens the workspace window and has no console, so it does not answer
+these commands; `maid-cli.exe` is the one that reads them and writes JSON to stdout.
+
+Below, `MAID` is a placeholder for the executable you resolved. Substitute it before
+running anything; do not create a shell variable or run `MAID` literally. This works the
+same way in PowerShell, cmd.exe, and POSIX shells.
+
+If the selected executable cannot run, report its exact error and stop. Do not fall through
+to another executable, which could silently target a different Maid build.
+
+## Load the full guide before running Maid commands
+
+```text
+MAID skills get maid-orchestration
+```
+
+That prints the complete, version-matched guide for the exact binary that will handle your
+next commands — the six domains, every command and flag, the message contract, and the
+error codes. Read it first, then run the specific command you need.
+
+Don't guess subcommands or flags from memory or from a cached copy of this stub. They may
+change between Maid releases, and this file deliberately does not list them. Prefer
+`--json` for agent-driven calls; **every response is JSON, including errors**.
+
+## Orientation commands
+
+These three are read-only and safe to run before you have read the guide:
+
+```text
+MAID orchestration run-current --json
+MAID orchestration run-list --json
+MAID orchestration worker-list --json
+```
+
+Beyond these, read the guide rather than guessing a command surface. In particular, do not
+invent a polling loop: the guide documents a blocking wait, and a timeout there is a
+checkpoint, not a failure.
+
+## Relationship to Orca's `orchestration`
+
+This skill is deliberately named `maid-orchestration` so it can be installed alongside
+Orca's `orchestration` without either one overwriting the other — both live under
+`~/.agents/skills/`. If both are present, use the one that matches the app you intend to
+drive: `maid-cli orchestration ...` here, `orca orchestration ...` there.
+
+Maid coordinates **on this PC only**. Orca's remote-host branch (`--to <host>` and relay
+routing) has no counterpart here; do not carry those flags over.
