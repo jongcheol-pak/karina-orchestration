@@ -94,12 +94,11 @@ Beyond these, read the guide rather than guessing a command surface. In particul
 invent a polling loop: the guide documents a blocking wait, and a timeout there is a
 checkpoint, not a failure.
 
-## Relationship to Orca's `orchestration`
+## Why the name starts with `maid-`
 
-This skill is deliberately named `maid-orchestration` so it can be installed alongside
-Orca's `orchestration` without either one overwriting the other — both live under
-`~/.agents/skills/`. If both are present, use the one that matches the app you intend to
-drive: `maid-cli orchestration ...` here, `orca orchestration ...` there.
+`~/.agents/skills/` is a shared directory that several tools install into, so a skill whose
+name collides with another tool's gets overwritten by whichever was installed last. That is
+why this skill is named `maid-orchestration` and drives `maid-cli orchestration ...`.
 
-Maid coordinates **on this PC only**. Orca's remote-host branch (`--to <host>` and relay
-routing) has no counterpart here; do not carry those flags over.
+Maid coordinates **on this PC only**. There is no remote-host or relay-routing axis here
+(`--to <host>` and friends); do not carry those flags over from elsewhere.
