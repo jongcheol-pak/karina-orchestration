@@ -1,13 +1,13 @@
 ---
-name: maid-orchestration
+name: karina-orchestration
 description: >-
-  Use Maid orchestration for structured multi-agent coordination on Windows:
+  Use Karina orchestration for structured multi-agent coordination on Windows:
   persistent threaded messages between agent terminals, blocking ask/reply
   flows, task DAGs with dependencies, dispatching work to supervised worker
   tabs, waiting for worker_done or escalation, decision gates, and coordinator
-  loops. Use for "orchestration", "maid orchestration", "coordinate agents",
+  loops. Use for "orchestration", "karina orchestration", "coordinate agents",
   "dispatch a task", "spawn a worker agent", "wait for worker_done", "task
-  DAG", "decision gate", and "ask another agent". Use maid-computer-use
+  DAG", "decision gate", and "ask another agent". Use karina-computer-use
   instead for desktop UI interaction, and use plain terminal commands for
   ordinary shell work that needs no coordination state.
 version: 1.0.1
@@ -16,24 +16,24 @@ version: 1.0.1
 # Inter-Agent Orchestration (Windows)
 
 This file is a discovery stub, not the usage guide. The full, version-matched orchestration
-reference is served by the `maid-cli` binary itself — kept out of this file on purpose so it
+reference is served by the `karina-cli` binary itself — kept out of this file on purpose so it
 can never drift from the binary that will actually run your commands.
 
-Engage Maid's orchestration surface whenever **coordination state matters** — when someone
+Engage Karina's orchestration surface whenever **coordination state matters** — when someone
 has to know which task is running where, who reported what, and whether a message was
 acknowledged. It covers persistent threaded messages between agent terminals, blocking
 ask/reply flows, task DAGs with dependencies, dispatching work to supervised worker tabs,
 waiting for `worker_done` or escalation, decision gates, and coordinator loops.
 
-Use `maid-computer-use` instead for desktop UI interaction, and plain terminal commands for
+Use `karina-computer-use` instead for desktop UI interaction, and plain terminal commands for
 ordinary shell work that needs no coordination state.
 
 This provider is **Windows-only**.
 
 ## This surface talks to the running app
 
-Unlike `maid-computer-use`, these commands do not act alone — Runs, tasks, dispatches, and
-the message inbox live inside the Maid app, and the CLI reaches it over a named pipe. **The
+Unlike `karina-computer-use`, these commands do not act alone — Runs, tasks, dispatches, and
+the message inbox live inside the Karina app, and the CLI reaches it over a named pipe. **The
 app must be running.** If it is not, every command answers with a JSON error saying so; the
 CLI will not launch the app for you, because that would tie the app's lifetime to a single
 command.
@@ -42,25 +42,25 @@ command.
 
 Choose the executable once and reuse it for every later command:
 
-- If the `MAID_CLI_COMMAND` environment variable is set, use its value.
-- Otherwise, use the `maid-cli.exe` that is already on `PATH`.
+- If the `KARINA_CLI_COMMAND` environment variable is set, use its value.
+- Otherwise, use the `karina-cli.exe` that is already on `PATH`.
 - Otherwise, use the full path of the installed binary.
 
-**It is the CLI binary, not the app binary.** Maid ships two executables that are built
+**It is the CLI binary, not the app binary.** Karina ships two executables that are built
 together: the app opens the workspace window and has no console, so it does not answer
-these commands; `maid-cli.exe` is the one that reads them and writes JSON to stdout.
+these commands; `karina-cli.exe` is the one that reads them and writes JSON to stdout.
 
-Below, `MAID` is a placeholder for the executable you resolved. Substitute it before
-running anything; do not create a shell variable or run `MAID` literally. This works the
+Below, `KARINA` is a placeholder for the executable you resolved. Substitute it before
+running anything; do not create a shell variable or run `KARINA` literally. This works the
 same way in PowerShell, cmd.exe, and POSIX shells.
 
 If the selected executable cannot run, report its exact error and stop. Do not fall through
-to another executable, which could silently target a different Maid build.
+to another executable, which could silently target a different Karina build.
 
-## Load the full guide before running Maid commands
+## Load the full guide before running Karina commands
 
 ```text
-MAID skills get maid-orchestration
+KARINA skills get karina-orchestration
 ```
 
 That prints the complete, version-matched guide for the exact binary that will handle your
@@ -68,7 +68,7 @@ next commands — the six domains, every command and flag, the message contract,
 error codes. Read it first, then run the specific command you need.
 
 Don't guess subcommands or flags from memory or from a cached copy of this stub. They may
-change between Maid releases, and this file deliberately does not list them. Prefer
+change between Karina releases, and this file deliberately does not list them. Prefer
 `--json` for agent-driven calls; **every response is JSON, including errors**.
 
 **Drain stdout while the command runs — never wait for exit and read afterwards.** This
@@ -78,27 +78,27 @@ is reading, and neither side moves. The same applies to stderr if you capture it
 `check --wait` writes a keepalive line there every 15 seconds for up to an hour. Use a call
 that reads and waits together (`subprocess.run(..., capture_output=True)`,
 `Command::output()`, `execFile`), not `wait()` followed by `read()`. This applies to every
-Maid command, not just this one.
+Karina command, not just this one.
 
 ## Orientation commands
 
 These three are read-only and safe to run before you have read the guide:
 
 ```text
-MAID orchestration run-current --json
-MAID orchestration run-list --json
-MAID orchestration worker-list --json
+KARINA orchestration run-current --json
+KARINA orchestration run-list --json
+KARINA orchestration worker-list --json
 ```
 
 Beyond these, read the guide rather than guessing a command surface. In particular, do not
 invent a polling loop: the guide documents a blocking wait, and a timeout there is a
 checkpoint, not a failure.
 
-## Why the name starts with `maid-`
+## Why the name starts with `karina-`
 
 `~/.agents/skills/` is a shared directory that several tools install into, so a skill whose
 name collides with another tool's gets overwritten by whichever was installed last. That is
-why this skill is named `maid-orchestration` and drives `maid-cli orchestration ...`.
+why this skill is named `karina-orchestration` and drives `karina-cli orchestration ...`.
 
-Maid coordinates **on this PC only**. There is no remote-host or relay-routing axis here
+Karina coordinates **on this PC only**. There is no remote-host or relay-routing axis here
 (`--to <host>` and friends); do not carry those flags over from elsewhere.
