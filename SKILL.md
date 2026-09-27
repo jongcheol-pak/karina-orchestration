@@ -7,10 +7,9 @@ description: >-
   tabs, waiting for worker_done or escalation, decision gates, and coordinator
   loops. Use for "orchestration", "karina orchestration", "coordinate agents",
   "dispatch a task", "spawn a worker agent", "wait for worker_done", "task
-  DAG", "decision gate", and "ask another agent". Use karina-computer-use
-  instead for desktop UI interaction, and use plain terminal commands for
-  ordinary shell work that needs no coordination state.
-version: 1.0.1
+  DAG", "decision gate", and "ask another agent". Use plain terminal commands
+  for ordinary shell work that needs no coordination state.
+version: 1.0.2
 ---
 
 # Inter-Agent Orchestration (Windows)
@@ -25,8 +24,7 @@ acknowledged. It covers persistent threaded messages between agent terminals, bl
 ask/reply flows, task DAGs with dependencies, dispatching work to supervised worker tabs,
 waiting for `worker_done` or escalation, decision gates, and coordinator loops.
 
-Use `karina-computer-use` instead for desktop UI interaction, and plain terminal commands for
-ordinary shell work that needs no coordination state.
+Use plain terminal commands for ordinary shell work that needs no coordination state.
 
 This provider is **Windows-only**.
 
