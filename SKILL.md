@@ -9,7 +9,7 @@ description: >-
   "dispatch a task", "spawn a worker agent", "wait for worker_done", "task
   DAG", "decision gate", and "ask another agent". Use plain terminal commands
   for ordinary shell work that needs no coordination state.
-version: 1.0.2
+version: 1.1.0
 ---
 
 # Inter-Agent Orchestration (Windows)
