@@ -5,11 +5,10 @@ description: >-
   persistent threaded messages between agent terminals, blocking ask/reply
   flows, task DAGs with dependencies, dispatching work to supervised worker
   tabs, waiting for worker_done or escalation, decision gates, and coordinator
-  loops. Use for "orchestration", "karina orchestration", "coordinate agents",
-  "dispatch a task", "spawn a worker agent", "wait for worker_done", "task
-  DAG", "decision gate", and "ask another agent". Use plain terminal commands
-  for ordinary shell work that needs no coordination state.
-version: 1.1.0
+  loops. Use whenever work is split across agent terminals and someone must
+  track which task runs where and who reported what. Use plain terminal
+  commands for ordinary shell work that needs no coordination state.
+version: 1.1.1
 ---
 
 # Inter-Agent Orchestration (Windows)
