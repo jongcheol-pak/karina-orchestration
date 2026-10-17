@@ -8,7 +8,7 @@ description: >-
   loops. Use whenever work is split across agent terminals and someone must
   track which task runs where and who reported what. Use plain terminal
   commands for ordinary shell work that needs no coordination state.
-version: 1.1.2
+version: 1.1.3
 ---
 
 # Inter-Agent Orchestration (Windows)
@@ -41,7 +41,7 @@ Choose the executable once and reuse it for every later command:
 
 - If the `KARINA_CLI_COMMAND` environment variable is set, use its value.
 - Otherwise, use the one already on `PATH`: `karina-cli` for the release build,
-  `karina-dev-cli` for the dev build (Settings → Browser → **Karina CLI 활성화** puts
+  `karina-dev-cli` for the dev build (Settings → AI 기능 → **Karina CLI** puts
   whichever build you are running there, and each name reaches its own app).
 - Otherwise, use the full path of the installed binary.
 
